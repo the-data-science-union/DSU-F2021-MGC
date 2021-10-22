@@ -1,0 +1,40 @@
+---
+title: "DSU Audio EDA"
+author: "Carlie Lin; SID 805-389-567"
+date: "10/18/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+
+audio=read.csv('../features_3_sec.csv')
+
+unique(audio[c("label")])
+
+#blues=subset(audio, label=="blues")
+#classical=subset(audio, label=="classical")
+#country=subset(audio, label=="country")
+#disco=subset(audio, label=="disco")
+#hiphop=subset(audio, label=="hiphop")
+#jazz=subset(audio, label=="jazz")
+#metal=subset(audio, label=="metal")
+#pop=subset(audio, label=="pop")
+#reggae=subset(audio, label=="reggae")
+#rock=subset(audio, label=="rock")
+
+boxplot(audio$chroma_stft_mean ~ audio$label, 
+)
+
+
+```
+
+
+
+
+
+
+```
