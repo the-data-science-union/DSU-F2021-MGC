@@ -26,15 +26,58 @@ unique(audio[c("label")])
 #reggae=subset(audio, label=="reggae")
 #rock=subset(audio, label=="rock")
 
-boxplot(audio$chroma_stft_mean ~ audio$label, 
-)
+```
+
+```{r}
+
+#rms_mean
+
+audio$label=with(audio, reorder(audio$label, audio$rms_mean, FUN=median))
+
+boxplot(rms_mean ~ label, audio, 
+las=2, col=c(2:8,10:12))
 
 
 ```
 
+From Daniel's features guide, we see that the mean RMS is how loud the song is on average. It is not surprising that the median mean RMS among the classical songs is the lowest. I think I'm more surprised that the median mean RMS for the pop songs is higher than that of rock and metal, but it does make sense that pop is up there as well.
 
 
+```{r}
 
+#rms_var
 
+audio$label=with(audio, reorder(audio$label, audio$rms_var, FUN=median))
+
+boxplot(rms_var ~ label, audio, 
+las=2, col=c(2:8,10:12))
 
 ```
+
+Th variance of RMS is how much RMS (loudness) varies over the course of the song. It seems like loudness doesn't vary much across most genres, only in hiphop and pop, which sounds about right. There can be soft emotional parts in pop that transitions into yelling. 
+
+```{r}
+
+#spectral_centroid_mean
+
+audio=read.csv('features_3_sec.csv')
+
+boxplot(spectral_centroid_mean ~ label, audio, 
+las=2, col=c(2:8,10:12))
+
+```
+
+The mean spectral centroid is basically where the center of the audio spectrum is across the entire song. The more stretched the box and whisker plot is, the more the center of the audio spectrum varies by song for a genre. Therefore, less stretched out plots have songs with similar audio spectrum centers. This makes sense for classical, which has limitations on how far the center can go. Jazz notably has many outliers - many songs have different audio spectrum center than a majority of the other jazz songs.
+
+```{r}
+
+#spectral_centroid_var
+
+audio$label=with(audio, reorder(audio$label, audio$spectral_centroid_var, FUN=median))
+
+boxplot(spectral_centroid_var ~ label, audio, 
+las=2, col=c(2:8,10:12))
+
+```
+
+The spectral centroid variance tells us how much the centroid of the song varies over the course of the song. The median spectral centroid variance for the classical, metal, and jazz genres are the lowest meaning the centroid doesn't move too drastically in these types of songs. The median spectral centroid variance for the hiphop, reggae, and pop genres are the highest meaning the centroid moves around somewhat often in these types of songs. 
